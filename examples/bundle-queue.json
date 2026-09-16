@@ -1,0 +1,23 @@
+{
+  "launches": [
+    {
+      "name": "Okei Alpha",
+      "symbol": "OALPHA",
+      "venue": "okeiswap",
+      "initialBuyUsdc": "0.05",
+      "metadata": {
+        "description": "First token in a queued /bundle run.",
+        "links": {"website": "https://example.com"}
+      }
+    },
+    {
+      "name": "Okei Beta",
+      "symbol": "OBETA",
+      "venue": "okeiswap",
+      "initialBuyUsdc": "0.05",
+      "metadata": {
+        "description": "Second token — separate create txs, not one atomic bundle."
+      }
+    }
+  ]
+}

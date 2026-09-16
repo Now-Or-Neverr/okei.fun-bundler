@@ -1,0 +1,22 @@
+{
+  "name": "Bundler Delayed",
+  "symbol": "BDLY",
+  "venue": "okeiswap",
+  "initialBuyUsdc": "0.10",
+  "blocksAfterCreate": 1,
+  "logoFile": "examples/logo.png",
+  "metadata": {
+    "description": "Tell the world about your token — lore is stored on chain, so keep it tight.",
+    "links": {
+      "x": "https://x.com/yourtoken",
+      "telegram": "https://t.me/yourgroup",
+      "discord": "https://discord.gg/yourinvite",
+      "website": "https://yourtoken.com"
+    }
+  },
+  "walletBuys": [
+    {"keyIndex": 0, "usdc": "0.05"},
+    {"keyIndex": 1, "usdc": "0.05"},
+    {"keyIndex": 2, "usdc": "0.05"}
+  ]
+}

@@ -1,0 +1,55 @@
+export const okeiFactoryAbi = [
+  {
+    type: 'function',
+    name: 'creationFee',
+    inputs: [],
+    outputs: [{name: '', type: 'uint256', internalType: 'uint256'}],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'defaultParams',
+    inputs: [],
+    outputs: [
+      {name: 'virtualUsdc', type: 'uint256', internalType: 'uint256'},
+      {name: 'totalSupply', type: 'uint256', internalType: 'uint256'},
+      {name: 'raiseTarget', type: 'uint256', internalType: 'uint256'},
+      {name: 'tradeFeeBps', type: 'uint16', internalType: 'uint16'},
+      {name: 'migrationFeeBps', type: 'uint16', internalType: 'uint16'},
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    name: 'createToken',
+    inputs: [
+      {name: 'name', type: 'string', internalType: 'string'},
+      {name: 'symbol', type: 'string', internalType: 'string'},
+      {name: 'metadataURI', type: 'string', internalType: 'string'},
+      {name: 'venue', type: 'uint8', internalType: 'enum Venue'},
+      {name: 'minTokensOut', type: 'uint256', internalType: 'uint256'},
+      {name: 'deadline', type: 'uint256', internalType: 'uint256'},
+    ],
+    outputs: [
+      {name: 'token', type: 'address', internalType: 'address'},
+      {name: 'curve', type: 'address', internalType: 'address'},
+      {name: 'tokensOut', type: 'uint256', internalType: 'uint256'},
+    ],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'event',
+    name: 'TokenCreated',
+    inputs: [
+      {name: 'token', type: 'address', indexed: true, internalType: 'address'},
+      {name: 'curve', type: 'address', indexed: true, internalType: 'address'},
+      {name: 'creator', type: 'address', indexed: true, internalType: 'address'},
+      {name: 'index', type: 'uint256', indexed: false, internalType: 'uint256'},
+      {name: 'name', type: 'string', indexed: false, internalType: 'string'},
+      {name: 'symbol', type: 'string', indexed: false, internalType: 'string'},
+      {name: 'metadataURI', type: 'string', indexed: false, internalType: 'string'},
+      {name: 'venue', type: 'uint8', indexed: false, internalType: 'enum Venue'},
+    ],
+    anonymous: false,
+  },
+] as const;

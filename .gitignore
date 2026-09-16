@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.env.local
+data/monitor/
+out/
+cache/
+scripts/*.bin
+scripts/api-launch.json
+scripts/token-page.html
+curl.exe

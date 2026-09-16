@@ -1,0 +1,30 @@
+{
+  "name": "okei-launch-bundler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "launch": "tsx src/cli-launch.ts",
+    "launch:form": "tsx src/cli-post-launch.ts examples/launch.json",
+    "launch:delayed": "tsx src/cli-post-launch.ts examples/launch-wallets-delayed.json",
+    "launch:same-block": "tsx src/cli-post-launch.ts examples/launch-wallets-same-block.json",
+    "launch:file": "tsx src/cli-post-launch.ts",
+    "bundle": "tsx src/cli-bundle.ts",
+    "deploy:atomic": "tsx src/cli-deploy-atomic.ts",
+    "monitor": "tsx src/cli-monitor.ts",
+    "upload:logo": "tsx src/cli-upload-logo.ts",
+    "forge:build": "forge build"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "viem": "^2.31.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsx": "^4.20.0",
+    "typescript": "^5"
+  }
+}

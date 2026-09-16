@@ -1,0 +1,16 @@
+{
+  "name": "Okei Coin",
+  "symbol": "OKEI",
+  "venue": "okeiswap",
+  "initialBuyUsdc": "1.00",
+  "logoFile": "examples/logo.png",
+  "metadata": {
+    "description": "Tell the world about your token — keep it tight; metadata is stored on chain.",
+    "links": {
+      "x": "https://x.com/yourtoken",
+      "telegram": "https://t.me/yourgroup",
+      "discord": "https://discord.gg/yourinvite",
+      "website": "https://yourtoken.com"
+    }
+  }
+}

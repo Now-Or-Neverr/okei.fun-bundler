@@ -1,0 +1,13 @@
+{
+  "name": "Okei Coin",
+  "symbol": "OKEI",
+  "venue": "okeiswap",
+  "initialBuyUsdc": "0.10",
+  "metadata": {
+    "description": "Requires ATOMIC_LAUNCH_ADDRESS — create + dev buy + bundleBuys in one transaction."
+  },
+  "bundleBuys": [
+    {"usdc": "0.05"},
+    {"usdc": "0.05"}
+  ]
+}

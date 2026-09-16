@@ -1,0 +1,7 @@
+{
+  "name": "Okei Coin",
+  "symbol": "OKEI",
+  "venue": "okeiswap",
+  "initialBuyUsdc": "0",
+  "metadataURI": "data:application/json,%7B%22description%22%3A%22Your%20pre-built%20document%22%7D"
+}
