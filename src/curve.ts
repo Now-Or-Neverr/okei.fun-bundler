@@ -60,6 +60,9 @@ export function curveAfterBuy(c: CurveState, grossIn: bigint): CurveState {
   return {...c, usdcReserve, tokenReserve, graduated};
 }
 
+/** Default min-out tolerance (15%). Parallel wallet buys often fill out of quote order. */
+export const DEFAULT_SLIPPAGE_BPS = 1500;
+
 export const applySlippage = (amount: bigint, slippageBps: number) =>
   (amount * BigInt(10_000 - slippageBps)) / BPS;
 

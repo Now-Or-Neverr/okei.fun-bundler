@@ -60,6 +60,7 @@ async function main() {
         chainId: cfg.chainId,
         rpcUrl: cfg.rpcUrl,
         factory: cfg.factory,
+        okeiSiteUrl: cfg.okeiSiteUrl,
         atomicLaunch: cfg.atomicLaunchAddress ?? null,
         walletPoolSize: loadWalletKeyPool().length,
         queueDepth: queue.list().filter((j) => j.status === 'queued').length,

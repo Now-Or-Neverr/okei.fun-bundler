@@ -148,7 +148,7 @@ export async function uploadLogoFile(logoFile: string): Promise<string> {
   if (jwt) {
     result = await pinToPinata(blob, fileName, jwt);
   } else {
-    const site = (process.env.OKEI_SITE_URL ?? 'https://testnet.okei.fun').replace(/\/$/, '');
+    const site = (process.env.OKEI_SITE_URL ?? 'https://okei.fun').replace(/\/$/, '');
     result = await pinViaOkeiUpload(site, blob, fileName);
   }
 

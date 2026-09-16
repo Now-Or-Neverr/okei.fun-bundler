@@ -12,6 +12,12 @@ function ensureDotenv() {
 export const ARC_TESTNET_ID = 5042002;
 export const ARC_MAINNET_ID = 5042;
 
+/** Live [okei.fun](https://okei.fun) factory (stock $6k / $14k curve). Still chain 5042002. */
+export const OKEI_FUN_FACTORY = '0x975F33Ebcc1514d5834Bf3C477c7A9F9d5Cc4856' as const;
+/** Cheap faucet factory on [testnet.okei.fun](https://testnet.okei.fun) ($6 / $24 curve). */
+export const OKEI_FUN_TESTNET_FAUCET_FACTORY =
+  '0x05b6b26cd29a951a2ca47001ac8fc04ec471a412' as const;
+
 export const arcTestnet = defineChain({
   id: ARC_TESTNET_ID,
   name: 'Arc Testnet',
@@ -103,12 +109,11 @@ export function loadConfig() {
   const chainId = Number(process.env.CHAIN_ID ?? ARC_TESTNET_ID);
   const chain = chainForId(chainId);
   const rpcUrl = process.env.ARC_RPC_URL ?? defaultRpcForChain(chainId);
-  const factory = process.env.FACTORY_ADDRESS;
-  const privateKey = process.env.BOT_PRIVATE_KEY;
+  const factory = process.env.FACTORY_ADDRESS?.trim() || (chainId === ARC_TESTNET_ID ? OKEI_FUN_FACTORY : '');
+  const privateKey = normalizePrivateKey(process.env.BOT_PRIVATE_KEY ?? '');
   const apiKey = process.env.BUNDLER_API_KEY ?? '';
   const port = Number(process.env.BUNDLER_PORT ?? 8787);
-  const defaultOkeiSite =
-    chainId === ARC_TESTNET_ID ? 'https://testnet.okei.fun' : 'https://okei.fun';
+  const defaultOkeiSite = 'https://okei.fun';
   const okeiSiteUrl = (process.env.OKEI_SITE_URL ?? defaultOkeiSite).replace(/\/$/, '');
   const explorerBase =
     process.env.EXPLORER_URL?.replace(/\/$/, '') ??
@@ -117,10 +122,10 @@ export function loadConfig() {
 
   if (!factory || !/^0x[0-9a-fA-F]{40}$/.test(factory)) {
     throw new Error(
-      'FACTORY_ADDRESS is required — mainnet: okei NEXT_PUBLIC_FACTORY_ADDRESS_MAINNET; testnet: NEXT_PUBLIC_FACTORY_ADDRESS',
+      'FACTORY_ADDRESS is required. okei.fun production: 0x975F33Ebcc1514d5834Bf3C477c7A9F9d5Cc4856 (still Arc testnet 5042002). Arc mainnet 5042 has no published factory yet.',
     );
   }
-  if (!privateKey || !/^0x[0-9a-fA-F]{64}$/.test(privateKey)) {
+  if (!privateKey) {
     throw new Error('BOT_PRIVATE_KEY is required (0x + 64 hex chars)');
   }
 

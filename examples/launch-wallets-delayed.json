@@ -3,6 +3,7 @@
   "symbol": "BDLY",
   "venue": "okeiswap",
   "initialBuyUsdc": "0.10",
+  "slippageBps": 1500,
   "blocksAfterCreate": 1,
   "logoFile": "examples/logo.png",
   "metadata": {

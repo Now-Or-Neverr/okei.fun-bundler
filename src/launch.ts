@@ -13,7 +13,7 @@ import {privateKeyToAccount} from 'viem/accounts';
 import {okeiFactoryAbi} from './abis/factory.js';
 import {GAS_LIMITS} from './config.js';
 import type {Chain} from 'viem';
-import {applySlippage, openingCurveFromParams, quoteBuy} from './curve.js';
+import {applySlippage, DEFAULT_SLIPPAGE_BPS, openingCurveFromParams, quoteBuy} from './curve.js';
 import {
   encodeMetadata,
   gasForMetadata,
@@ -69,6 +69,7 @@ export type LaunchRequest = {
   /** Opening buy in USDC (human, e.g. "1.5"). Added on top of creation fee. */
   initialBuyUsdc?: string;
   venue?: Venue;
+  /** Min-out tolerance in bps (100 = 1%). Default 1500 = 15%. */
   slippageBps?: number;
   /** Extra curve buys in the same tx as create (requires ATOMIC_LAUNCH_ADDRESS). */
   bundleBuys?: BundleBuyLeg[];
@@ -184,6 +185,16 @@ export async function launchToken(
   if (err) throw new Error(err);
   req = prepared;
 
+  const factoryCode = await clients.publicClient.getCode({address: clients.factory});
+  if (!factoryCode || factoryCode === '0x') {
+    throw new Error(
+      `FACTORY_ADDRESS ${clients.factory} is not a contract on chain ${clients.chain.id}. ` +
+        (clients.chain.id === 5042
+          ? 'okei.fun has not deployed OkeiFactory on Arc mainnet yet (docs still list testnet 0x975F… only). A mainnet factory address is required before launches on 5042 will work.'
+          : 'Set FACTORY_ADDRESS to the OkeiFactory deployed on this chain.'),
+    );
+  }
+
   const walletLegs = req.walletBuys?.length ?? 0;
   if (walletLegs > 0) {
     const pool = opts?.walletKeyPool ?? [];
@@ -243,7 +254,7 @@ export async function launchToken(
   const symbol = req.symbol.toUpperCase();
   const metadataURI = req.metadataURI?.trim() ?? encodeMetadata(req.metadata ?? {});
   const venue = req.venue === 'uniswap' ? 1 : 0;
-  const slippageBps = req.slippageBps ?? 300;
+  const slippageBps = req.slippageBps ?? DEFAULT_SLIPPAGE_BPS;
 
   const [creationFee, params] = await Promise.all([
     publicClient.readContract({

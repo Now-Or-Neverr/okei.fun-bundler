@@ -3,19 +3,28 @@
   "symbol": "BSAME",
   "venue": "okeiswap",
   "initialBuyUsdc": "0.10",
-  "logoFile": "examples/logo.png",
+  "slippageBps": 1500,
+  "logoFile": "examples/3moKPHgo_400x400.jpg",
   "metadata": {
-    "description": "Tell the world about your token — lore is stored on chain, so keep it tight.",
+    "description": "Fair-launch on Arc via Bullcheese. No bonding curve. No graduation. 100% of supply in a locked USDC DEX pool from block one.",
     "links": {
-      "x": "https://x.com/yourtoken",
-      "telegram": "https://t.me/yourgroup",
-      "discord": "https://discord.gg/yourinvite",
-      "website": "https://yourtoken.com"
+      "x": "https://x.com/Bullcheese_fun",
+      "telegram": "https://t.me/trustswap",
+      "website": "https://bullcheese.fun/"
     }
   },
   "walletBuys": [
-    {"keyIndex": 0, "usdc": "0.05"},
-    {"keyIndex": 1, "usdc": "0.05"},
-    {"keyIndex": 2, "usdc": "0.05"}
+    {
+      "keyIndex": 0,
+      "usdc": "0.05"
+    },
+    {
+      "keyIndex": 1,
+      "usdc": "0.05"
+    },
+    {
+      "keyIndex": 2,
+      "usdc": "0.05"
+    }
   ]
 }

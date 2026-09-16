@@ -1,6 +1,10 @@
 # Okei launch bundler
 
-Bot that launches tokens through **`OkeiFactory.createToken`** — the same path as [okei.fun](https://okei.fun) / [testnet.okei.fun](https://testnet.okei.fun/) `/create`. **`.env.example` defaults to Arc testnet** (`CHAIN_ID=5042002`); switch to mainnet via the commented block in `.env`.
+Bot that launches tokens through **`OkeiFactory.createToken`** — the same path as [okei.fun](https://okei.fun/) `/create`.
+
+**Production site** ([okei.fun](https://okei.fun/docs)) is still **Arc Testnet** (`CHAIN_ID=5042002`) with the stock **$6,000 / $14,000** curve and factory `0x975F33Ebcc1514d5834Bf3C477c7A9F9d5Cc4856`. Arc mainnet (`5042`) has no published okei factory yet — tokens sent there will not show on the site.
+
+The cheap faucet factory (`0x05b6…a412`, $6 / $24) is [testnet.okei.fun](https://testnet.okei.fun/) only.
 
 ## 1. Configure `.env`
 
@@ -9,40 +13,39 @@ cd bundler
 cp .env.example .env
 ```
 
-| Variable | Mainnet |
-|----------|---------|
-| `CHAIN_ID` | `5042` |
-| `ARC_RPC_URL` | `https://rpc.mainnet.arc.io` (must support **eth_sendTransaction**) |
-| `FACTORY_ADDRESS` | Your mainnet OkeiFactory — same as okei `NEXT_PUBLIC_FACTORY_ADDRESS_MAINNET` |
-| `BOT_PRIVATE_KEY` | Hot wallet with **real USDC** on Arc for fee + dev buy |
-| `OKEI_SITE_URL` | `https://okei.fun` or local web if you run okei against mainnet |
+| Variable | okei.fun production |
+|----------|---------------------|
+| `CHAIN_ID` | `5042002` |
+| `ARC_RPC_URL` | `https://rpc.testnet.arc.io` |
+| `EXPLORER_URL` | `https://testnet.arcscan.app` |
+| `FACTORY_ADDRESS` | `0x975F33Ebcc1514d5834Bf3C477c7A9F9d5Cc4856` |
+| `OKEI_SITE_URL` | `https://okei.fun` |
+| `BOT_PRIVATE_KEY` | Wallet with USDC (`creationFee` is **1 USDC** plus `initialBuyUsdc` plus gas) |
 
-Public read-only RPCs (e.g. some explorer endpoints) cannot submit txs. Use Circle’s mainnet RPC or your own provider.
+When okei publishes a chain-`5042` factory, switch using the commented block in `.env.example`.
 
-**Testnet (default in `.env.example`):** `OKEI_SITE_URL=https://testnet.okei.fun`, factory `0x05b6…a412` — see [testnet.okei.fun](https://testnet.okei.fun/).
+## 2. Point a local okei.fun checkout at the same factory
 
-## 2. Point okei.fun at mainnet (if testing locally)
-
-In `okei.fun-master/web/.env.local`:
+In `okei.fun-master/web/.env.local` (only if you run the site yourself):
 
 ```env
-NEXT_PUBLIC_CHAIN_ID=5042
-NEXT_PUBLIC_ARC_MAINNET_RPC_URL=https://rpc.mainnet.arc.io
-NEXT_PUBLIC_FACTORY_ADDRESS_MAINNET=<same as bundler FACTORY_ADDRESS>
+NEXT_PUBLIC_CHAIN_ID=5042002
+NEXT_PUBLIC_FACTORY_ADDRESS=0x975F33Ebcc1514d5834Bf3C477c7A9F9d5Cc4856
+NEXT_PUBLIC_SITE_URL=https://okei.fun
 ```
 
-Run indexer with mainnet `CHAIN_ID`, factory, and `INDEXER_START_BLOCK` for that deploy. Web and bundler must share the **same factory address**.
+Web, indexer, and bundler must share the **same factory address**.
 
-## 3. Wallet on Arc mainnet
+## 3. Wallet
 
-Add Arc in MetaMask:
+Add Arc Testnet in MetaMask (this is what [okei.fun](https://okei.fun/) uses today):
 
-- Chain ID: **5042**
-- RPC: `https://rpc.mainnet.arc.io`
+- Chain ID: **5042002**
+- RPC: `https://rpc.testnet.arc.io`
 - Currency: **USDC**, 18 decimals
-- Explorer: `https://arcscan.app`
+- Explorer: `https://testnet.arcscan.app`
 
-Fund the bot address with enough native USDC for `creationFee + initialBuy` per launch.
+Fund the bot address with enough native USDC for `1 + initialBuy` per launch, plus each `walletBuys` leg from `BUNDLER_WALLET_KEYS`.
 
 ## 4. Run the bundler
 
@@ -179,7 +182,7 @@ npm run launch:delayed
 
 See **`examples/README.md`** for JSON fields matching the okei.fun form (`name`, `symbol`, `metadata`, `venue`, `initialBuyUsdc`, …).
 
-**Local logo:** set `"logoFile": "examples/logo.png"` (or your path). The bot pins via Pinata (`PINATA_JWT`) or [testnet.okei.fun](https://testnet.okei.fun/) `/api/upload` — same flow as the site’s **Upload to IPFS** button.
+**Local logo:** set `"logoFile": "examples/logo.png"` (or your path). The bot pins via Pinata (`PINATA_JWT`) or [okei.fun](https://okei.fun/) `/api/upload` — same flow as the site’s **Upload to IPFS** button.
 
 | npm script | Example file |
 |------------|----------------|
@@ -241,13 +244,14 @@ curl -X POST http://127.0.0.1:8787/monitor/analyze -H "content-type: application
 
 Optional header: `Authorization: Bearer <BUNDLER_API_KEY>` if set.
 
-## Switch back to testnet
+## Switch back to the cheap faucet factory
 
 ```env
 CHAIN_ID=5042002
 ARC_RPC_URL=https://rpc.testnet.arc.io
 FACTORY_ADDRESS=0x05b6b26cd29a951a2ca47001ac8fc04ec471a412
 EXPLORER_URL=https://testnet.arcscan.app
+OKEI_SITE_URL=https://testnet.okei.fun
 ```
 
 Restart the bot after changing `.env`.

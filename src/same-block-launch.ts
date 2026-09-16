@@ -13,6 +13,7 @@ import {GAS_LIMITS} from './config.js';
 import {
   applySlippage,
   curveAfterBuy,
+  DEFAULT_SLIPPAGE_BPS,
   openingCurveFromParams,
   quoteBuy,
   type CurveState,
@@ -120,7 +121,7 @@ export async function launchSameBlockMultiWallet(
   const symbol = req.symbol.toUpperCase();
   const metadataURI = req.metadataURI?.trim() ?? encodeMetadata(req.metadata ?? {});
   const venue = req.venue === 'uniswap' ? 1 : 0;
-  const slippageBps = req.slippageBps ?? 300;
+  const slippageBps = req.slippageBps ?? DEFAULT_SLIPPAGE_BPS;
 
   const [creationFee, params] = await Promise.all([
     publicClient.readContract({

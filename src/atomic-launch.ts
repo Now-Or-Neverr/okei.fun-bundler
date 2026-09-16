@@ -4,7 +4,7 @@ import {okeiAtomicLaunchAbi} from './abis/atomic-launch.js';
 import {okeiFactoryAbi} from './abis/factory.js';
 import {GAS_LIMITS} from './config.js';
 import type {Chain} from 'viem';
-import {applySlippage, curveAfterBuy, openingCurveFromParams, quoteBuy} from './curve.js';
+import {applySlippage, curveAfterBuy, DEFAULT_SLIPPAGE_BPS, openingCurveFromParams, quoteBuy} from './curve.js';
 import {encodeMetadata, gasForMetadata} from './metadata.js';
 import type {LaunchClients} from './launch.js';
 import type {BundleBuyLeg, LaunchRequest} from './launch.js';
@@ -31,7 +31,7 @@ export async function launchTokenAtomic(
   const symbol = req.symbol.toUpperCase();
   const metadataURI = req.metadataURI?.trim() ?? encodeMetadata(req.metadata ?? {});
   const venue = req.venue === 'uniswap' ? 1 : 0;
-  const slippageBps = req.slippageBps ?? 300;
+  const slippageBps = req.slippageBps ?? DEFAULT_SLIPPAGE_BPS;
   const beneficiary = (req.beneficiary ?? account.address) as `0x${string}`;
   const extrasReq = req.bundleBuys ?? [];
 

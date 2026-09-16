@@ -2,7 +2,7 @@ import type {LaunchRequest} from './launch.js';
 import {encodeMetadata, parseDataUri} from './metadata.js';
 import {ipfsToGatewayUrl, uploadLogoFile} from './upload-logo.js';
 
-/** Upload local logo (if any) and set `metadataURI` like testnet.okei.fun/create. */
+/** Upload local logo (if any) and set `metadataURI` like okei.fun/create. */
 export async function prepareLaunchRequest(req: LaunchRequest): Promise<LaunchRequest> {
   if (req.metadataURI?.trim()) {
     return req;
